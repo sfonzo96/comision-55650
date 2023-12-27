@@ -1,0 +1,8 @@
+- Desarrollar un servidor de express
+- Uso de nodemon
+- Endpoints:
+    - '/products': leer productos y devolverlos. Recibir limit por query
+    - '/products/:pid': recibe id del producto vía param y devuelve dicho producto
+- Request y Response
+- req.params, req.query
+

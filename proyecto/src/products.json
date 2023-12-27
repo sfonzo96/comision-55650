@@ -1,0 +1,102 @@
+[
+	{
+		"title": "Titulo1",
+		"description": "Descripcion1",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa001",
+		"stock": 50,
+		"category": "cat1",
+		"id": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+	},
+	{
+		"title": "Titulo2",
+		"description": "Descripcion2",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa002",
+		"stock": 50,
+		"category": "cat2",
+		"id": "6a59dfc3-1c51-4ec2-83aa-4ccf4d2db238"
+	},
+	{
+		"title": "Titulo3",
+		"description": "Descripcion3",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa003",
+		"stock": 50,
+		"category": "cat3",
+		"id": "8e666b04-6b95-4f7d-ae47-24c55f53f775"
+	},
+	{
+		"title": "Titulo4",
+		"description": "Descripcion4",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa004",
+		"stock": 50,
+		"category": "cat4",
+		"id": "76f0252e-65c8-4a45-aa9f-8e886dd6bf3e"
+	},
+	{
+		"title": "Titulo5",
+		"description": "Descripcion5",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa005",
+		"stock": 50,
+		"category": "cat1",
+		"id": "9be54bc3-2e5d-4d3b-8d3a-2a091a2f2ea7"
+	},
+	{
+		"title": "Titulo6",
+		"description": "Descripcion6",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa006",
+		"stock": 50,
+		"category": "cat2",
+		"id": "a041b625-938d-403e-b0f3-1b6c059d5eb2"
+	},
+	{
+		"title": "Titulo7",
+		"description": "Descripcion7",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa007",
+		"stock": 50,
+		"category": "cat3",
+		"id": "ddc1a867-0b6f-45c4-ae94-9f282e2567d8"
+	},
+	{
+		"title": "Titulo8",
+		"description": "Descripcion8",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa008",
+		"stock": 50,
+		"category": "cat4",
+		"id": "325d7f46-54ec-4a32-9462-9f00fbb18c5c"
+	},
+	{
+		"title": "Titulo9",
+		"description": "Descripcion9",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa009",
+		"stock": 50,
+		"category": "cat1",
+		"id": "4eac60a4-0d48-4f4f-a5d5-7f4e90c0514e"
+	},
+	{
+		"title": "Titulo10",
+		"description": "Descripcion10",
+		"price": 100,
+		"thumbnail": "link a imagen",
+		"code": "aaa010",
+		"stock": 50,
+		"category": "cat2",
+		"id": "b5db15b6-8f6b-4e64-a9b3-06b7407a6f4a"
+	}
+]

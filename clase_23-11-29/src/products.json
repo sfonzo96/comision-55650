@@ -1,0 +1,12 @@
+[
+    { "title": "Titulo1", "description": "Descripcion1", "price": 100, "thumbnail": "link a imagen", "code": "aaa001", "stock": 50, "id": 1 },
+    { "title": "Titulo2", "description": "Descripcion2", "price": 100, "thumbnail": "link a imagen", "code": "aaa002", "stock": 50, "id": 2 },
+    { "title": "Titulo3", "description": "Descripcion3", "price": 100, "thumbnail": "link a imagen", "code": "aaa003", "stock": 50, "id": 3 },
+    { "title": "Titulo4", "description": "Descripcion4", "price": 100, "thumbnail": "link a imagen", "code": "aaa004", "stock": 50, "id": 4 },
+    { "title": "Titulo5", "description": "Descripcion5", "price": 100, "thumbnail": "link a imagen", "code": "aaa005", "stock": 50, "id": 5 },
+    { "title": "Titulo6", "description": "Descripcion6", "price": 100, "thumbnail": "link a imagen", "code": "aaa006", "stock": 50, "id": 6 },
+    { "title": "Titulo7", "description": "Descripcion7", "price": 100, "thumbnail": "link a imagen", "code": "aaa007", "stock": 50, "id": 7 },
+    { "title": "Titulo8", "description": "Descripcion8", "price": 100, "thumbnail": "link a imagen", "code": "aaa008", "stock": 50, "id": 8 },
+    { "title": "Titulo9", "description": "Descripcion9", "price": 100, "thumbnail": "link a imagen", "code": "aaa009", "stock": 50, "id": 9 },
+    { "title": "Titulo10", "description": "Descripcion10", "price": 100, "thumbnail": "link a imagen", "code": "aaa010", "stock": 50, "id": 10 }
+]

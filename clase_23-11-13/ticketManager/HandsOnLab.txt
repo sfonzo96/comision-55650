@@ -1,0 +1,26 @@
+Registrador de tickets de eventos
+
+- Definir la clase TicketManager, la cuál tendrá un arreglo de eventos que iniciará vació.
+
+- La clase debe contar con una variable privada "precioBaseDeGanancia", la cuál añadirá un costo adicional al precio de cada eventos.
+
+- Debe contar con el método "getEventos", el cuál mostrará los eventos guardados.
+
+- Debe contar con el método "agregarEvento", el cuál recibirá los siguientes parámetros:
+    - nombre
+    - localidad
+    - precio (con un incremento del 0.15 para cada nuevo evento)
+    - capacidad (50 por defecto)
+    - fecha (día actual por defecto)"
+El método deberá crar además el campo id de manera que sea autoincrementable y el campo "participantes" que iniciará como un arreglo vació.
+
+- Debe contar con un método "agregarUsuario", el cuál recibirá:
+    - id del evento (se debe validar su existencia)
+    - id del usuario
+El método debe evaluar que el evento exista y que el usuario no haya estado registrado previamente. En caso de que esté todo en orden, se agrega el id al arreglo participantes de ese evento.
+
+- Debe contar con un método "ponerEventoEnGira", el cuál recibirá:
+    - id del evento
+    - nueva localidad
+    - nueva fecha
+El método debe copar el evento existente, con una nueva localidad, nueva fecha y nuevo id, con sus participantes vacíos (usar spread para el resto de las propiedades)
