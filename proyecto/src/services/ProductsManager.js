@@ -24,13 +24,14 @@ export default class ProductsManager {
 
 	async addProduct(product) {
 		try {
-			if (!allFieldsAreValid) {
+			if (!this.allFieldsAreValid) {
 				throw new Error("Missing data.");
 			}
 
+			console.log(product);
 			const products = await this.getProducts();
 
-			if (products.find((product) => product.code === code)) {
+			if (products.find((existingProduct) => existingProduct.code === product.code)) {
 				throw new Error(`Product with code ${code} already exists`);
 			}
 
@@ -76,7 +77,7 @@ export default class ProductsManager {
 
 	async deleteProductById(id) {
 		try {
-			const product = getProductsById(id);
+			const product = this.getProductById(id);
 			if (!product) {
 				throw new Error(`Product with id ${id} was not found.`);
 			}

@@ -59,7 +59,7 @@ productsRouter.get("/:pid", async (req, res) => {
 productsRouter.post("/", async (req, res) => {
 	try {
 		const { product } = req.body;
-
+		console.log(req);
 		const newProduct = await productManager.addProduct(product);
 
 		if (!newProduct) {
@@ -70,9 +70,17 @@ productsRouter.post("/", async (req, res) => {
 			return;
 		}
 
+		const products = await productManager.getProducts();
+		// Alternativa a HTTPs
+		// req.io.emit("updateProducts", {
+		// 	success: true,
+		// 	products,
+		// });
+
 		res.status(200).json({
 			success: true,
-			data: newProduct,
+			// newProduct: newProduct,
+			products,
 		});
 	} catch (error) {
 		console.log(error);
@@ -117,9 +125,16 @@ productsRouter.delete("/:pid", async (req, res) => {
 
 		await productManager.deleteProductById(pid);
 
+		const products = await productManager.getProducts();
+		// req.io.emit("updateProducts", {
+		// 	success: true,
+		// 	products,
+		// });
+
 		res.status(200).json({
 			success: true,
-			message: `Product with ID ${pid} was deleted.`,
+			// message: `Product with ID ${pid} was deleted.`,
+			products,
 		});
 	} catch (error) {
 		console.log(error);
