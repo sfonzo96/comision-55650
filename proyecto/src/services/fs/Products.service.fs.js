@@ -22,7 +22,7 @@ export default class ProductsManager {
 		return true;
 	}
 
-	async addProduct(product) {
+	async createProduct(product) {
 		try {
 			if (!this.allFieldsAreValid) {
 				throw new Error("Missing data.");

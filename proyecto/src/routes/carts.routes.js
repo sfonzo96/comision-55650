@@ -1,5 +1,5 @@
 import express from "express";
-import CartsManager from "../services/CartsManager.js";
+import CartsManager from "../services/fs/Carts.service.fs.js";
 
 const cartsManager = new CartsManager();
 
@@ -7,7 +7,7 @@ const cartsRouter = express.Router();
 
 cartsRouter.post("/", async (req, res) => {
 	try {
-		await cartsManager.addCart();
+		await cartsManager.createCart();
 
 		res.status(200).json({
 			success: true,

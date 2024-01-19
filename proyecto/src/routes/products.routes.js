@@ -1,5 +1,5 @@
 import express from "express";
-import ProductManager from "../services/ProductsManager.js";
+import ProductManager from "../services/fs/Products.service.fs.js";
 
 const productManager = new ProductManager();
 const productsRouter = express.Router();
@@ -60,7 +60,7 @@ productsRouter.post("/", async (req, res) => {
 	try {
 		const { product } = req.body;
 		console.log(req);
-		const newProduct = await productManager.addProduct(product);
+		const newProduct = await productManager.createProduct(product);
 
 		if (!newProduct) {
 			res.status(400).json({
@@ -126,14 +126,10 @@ productsRouter.delete("/:pid", async (req, res) => {
 		await productManager.deleteProductById(pid);
 
 		const products = await productManager.getProducts();
-		// req.io.emit("updateProducts", {
-		// 	success: true,
-		// 	products,
-		// });
 
 		res.status(200).json({
 			success: true,
-			// message: `Product with ID ${pid} was deleted.`,
+			message: `Product with ID ${pid} was deleted.`,
 			products,
 		});
 	} catch (error) {

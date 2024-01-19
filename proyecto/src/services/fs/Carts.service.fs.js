@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import fs from "fs";
-import ProductsManager from "./ProductsManager.js";
+import ProductsManager from "./Products.service.fs.js";
 
 const productsManager = new ProductsManager();
 
@@ -11,7 +11,7 @@ export default class CartsManager {
 		this.#cartsFilePath = filePath;
 	}
 
-	async addCart() {
+	async createCart() {
 		try {
 			const newCart = {
 				id: crypto.randomUUID(),
