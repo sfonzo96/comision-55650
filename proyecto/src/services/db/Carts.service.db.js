@@ -38,7 +38,7 @@ export default class CartsManager {
 			if (!productExistsInCart) {
 				cart = await CartModel.findByIdAndUpdate(
 					cid,
-					{ $push: { product: { product: pid, quantity: 1 } } },
+					{ $push: { products: { product: pid, quantity: 1 } } },
 					{ new: true }
 				).lean();
 			} else {
@@ -98,7 +98,7 @@ export default class CartsManager {
 
 			const cart = await CartModel.findByIdAndUpdate(
 				cid,
-				{ $pull: { product: { product: pid } } },
+				{ $pull: { products: { product: pid } } },
 				{ new: true }
 			).lean();
 
@@ -110,7 +110,7 @@ export default class CartsManager {
 
 	async emptyCart(cid) {
 		try {
-			const cart = await CartModel.findByIdAndUpdate(cid, { $set: { product: [] } }, { new: true }).lean();
+			const cart = await CartModel.findByIdAndUpdate(cid, { $set: { products: [] } }, { new: true }).lean();
 
 			return cart;
 		} catch (error) {
