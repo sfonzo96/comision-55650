@@ -66,7 +66,7 @@ textarea {
 	margin-bottom: 10px;
 }
 
-button {
+.formButton {
 	padding: 10px;
 	background-color: var(--primary-color);
 	color: #fff;
@@ -76,6 +76,26 @@ button {
 
 button:hover {
 	background-color: var(--secondary-color);
+}
+
+.pageControllersContainer {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.currentPage {
+	padding: 1rem;
+	background-color: var(--primary-color);
+	color: #fff;
+}
+
+.changePageBtn {
+	padding: 1rem;
+	background-color: var(--primary-color);
+	color: #fff;
+	border: none;
+	cursor: pointer;
 }
 
 /* Responsive styles */

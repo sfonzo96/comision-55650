@@ -1,5 +1,5 @@
 import ProductModel from "../../dao/models/product.model.js";
-export default class ProductsManager {
+export default class ProductsService {
 	async createProduct(product) {
 		try {
 			const newProduct = await ProductModel.create(product);
@@ -23,10 +23,10 @@ export default class ProductsManager {
 	async getPaginatedProducts(filter) {
 		try {
 			filter.options.lean = true;
-			const products = await ProductModel.paginate(filter.query, filter.options);
-			products.status = "success";
+			const pagesData = await ProductModel.paginate(filter.query, filter.options);
+			pagesData.status = "success";
 
-			return products;
+			return pagesData;
 		} catch (error) {
 			throw error;
 		}

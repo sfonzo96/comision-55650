@@ -1,7 +1,7 @@
 import fs from "fs";
 import crypto from "crypto";
 
-export default class ProductsManager {
+export default class ProductsService {
 	#filePath;
 
 	constructor(filePath = "./src/products.json") {

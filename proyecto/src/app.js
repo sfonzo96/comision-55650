@@ -3,16 +3,41 @@ import { Server } from "socket.io";
 import handlebars from "express-handlebars";
 import IndexRouter from "./routes/index.routes.js";
 import mongoose from "mongoose";
+import MongoStore from "connect-mongo";
+import cookieParser from "cookie-parser";
+import session from "express-session";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/";
+const COOKIE_SECRET = process.env.COOKIE_SECRET || "ASDFASD!@#$";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("src/public"));
 
-app.engine("handlebars", handlebars.engine());
+app.use(cookieParser());
+app.use(
+	session({
+		store: MongoStore.create({ mongoUrl: MONGO_URI, ttl: 1000 * 60 * 60 }),
+		secret: COOKIE_SECRET,
+		saveUninitialized: true,
+		resave: true,
+		cookie: {
+			maxAge: 1000 * 60 * 60,
+		},
+	})
+);
+
+const hbs = handlebars.create({
+	helpers: {
+		eq(val1, val2) {
+			return val1 === val2;
+		},
+	},
+});
+
+app.engine("handlebars", hbs.engine);
 app.set("views", "src/views");
 app.set("view engine", "handlebars");
 

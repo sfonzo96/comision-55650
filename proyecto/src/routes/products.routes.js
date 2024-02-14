@@ -1,12 +1,12 @@
 import express from "express";
-import ProductService from "../services/db/Products.service.db.js";
+import ProductsService from "../services/db/Products.service.db.js";
 
-const productService = new ProductService();
+const productsService = new ProductsService();
 const productsRouter = express.Router();
 
 productsRouter.get("/", async (req, res) => {
 	try {
-		const { limit = 10, page = 1, sort, category } = req.query;
+		const { limit = 8, page = 1, sort, category } = req.query;
 		const filter = {
 			options: {
 				limit,
@@ -22,9 +22,23 @@ productsRouter.get("/", async (req, res) => {
 			filter.options.sort = { price: sort };
 		}
 		//console.log(filter);
-		const products = await productService.getPaginatedProducts(filter);
+		const pagesData = await productsService.getPaginatedProducts(filter);
 
-		if (products.length < 1) {
+		pagesData.products = pagesData.docs; // Cambio nombre de propiedad para ser más explícito
+		delete pagesData.docs; // Elimino propiedad que ya no uso
+
+		// COMMENT: A este endpoint se enviaría la petición si se trabajase con React (y no estaría está lógica en el views.routes ya que directamente no existiría)
+		// const baseUrl = `http://localhost:8080/api/products?limit=${limit}&page=${pagesData.prevPage}`;
+
+		// pagesData.prevLink =
+		// 	pagesData.hasPrevPage &&
+		// 	`${baseUrl}${sort ? "&sort=" + sort : ""}${category ? "&category=" + category : ""}`; // Creo link para la página anterior de manera dinámica
+
+		// pagesData.nextLink =
+		// 	pagesData.hasNextPage &&
+		// 	`${baseUrl}${sort ? "&sort=" + sort : ""}${category ? "&category=" + category : ""}`;
+
+		if (pagesData.products.length < 1) {
 			res.status(404).json({
 				success: false,
 				message: "Could not retrieve products",
@@ -32,9 +46,10 @@ productsRouter.get("/", async (req, res) => {
 			return;
 		}
 
+		console.log(pagesData);
 		res.status(200).json({
 			success: true,
-			data: products,
+			data: pagesData,
 		});
 	} catch (error) {
 		console.log(error);
@@ -48,7 +63,7 @@ productsRouter.get("/:pid", async (req, res) => {
 	try {
 		const { pid } = req.params;
 
-		const product = await productService.getProductById(pid);
+		const product = await productsService.getProductById(pid);
 
 		if (!product) {
 			res.status(404).json({
@@ -74,7 +89,7 @@ productsRouter.get("/:pid", async (req, res) => {
 productsRouter.post("/", async (req, res) => {
 	try {
 		const { product } = req.body;
-		const newProduct = await productService.createProduct(product);
+		const newProduct = await productsService.createProduct(product);
 
 		if (!newProduct) {
 			res.status(400).json({
@@ -84,7 +99,7 @@ productsRouter.post("/", async (req, res) => {
 			return;
 		}
 
-		const products = await productService.getProducts();
+		const products = await productsService.getProducts();
 		// Alternativa a HTTPs
 		// req.io.emit("updateProducts", {
 		// 	success: true,
@@ -110,7 +125,7 @@ productsRouter.put("/:pid", async (req, res) => {
 		const { pid } = req.params;
 		const { product } = req.body;
 
-		const updatedProduct = await productService.updateProduct(pid, product);
+		const updatedProduct = await productsService.updateProduct(pid, product);
 
 		if (!updatedProduct) {
 			res.status(400).json({
@@ -137,9 +152,9 @@ productsRouter.delete("/:pid", async (req, res) => {
 	try {
 		const { pid } = req.params;
 
-		await productService.deleteProductById(pid);
+		await productsService.deleteProductById(pid);
 
-		const products = await productService.getProducts();
+		const products = await productsService.getProducts();
 
 		res.status(200).json({
 			success: true,

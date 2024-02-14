@@ -1,10 +1,10 @@
 import crypto from "crypto";
 import fs from "fs";
-import ProductsManager from "./Products.service.fs.js";
+import ProductsService from "./Products.service.fs.js";
 
-const productsManager = new ProductsManager();
+const productsService = new ProductsService();
 
-export default class CartsManager {
+export default class CartsService {
 	#cartsFilePath;
 
 	constructor(filePath = "./src/carts.json") {
@@ -52,7 +52,7 @@ export default class CartsManager {
 			cart.products = await Promise.all(
 				cart.products.map(async (productData) => {
 					return {
-						product: await productsManager.getProductById(productData.product),
+						product: await productsService.getProductById(productData.product),
 						quantity: productData.quantity,
 					};
 				})

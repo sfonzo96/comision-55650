@@ -1,5 +1,5 @@
 import CartModel from "../../dao/models/Cart.model.js";
-export default class CartsManager {
+export default class CartsService {
 	async createCart() {
 		try {
 			const product = [];
