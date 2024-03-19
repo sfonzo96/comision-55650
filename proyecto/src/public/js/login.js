@@ -1,14 +1,18 @@
 async function postLogin(email, password) {
 	const data = { email, password };
 
-	const response = await fetch("/api/sessions/login", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data),
-	});
-
-	const result = await response.json();
-	return result;
+	try {
+		const response = await fetch("/api/auth/login", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		});
+		console.log(response);
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		return { success: false, message: error.text };
+	}
 }
 
 const loginForm = document.getElementById("login-form");
@@ -24,6 +28,6 @@ loginForm.addEventListener("submit", async (event) => {
 	if (response.success == true) {
 		window.location.href = response.redirectUrl;
 	} else {
-		alert("Datos Incorrectos");
+		alert(response.message);
 	}
 });

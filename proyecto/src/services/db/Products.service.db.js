@@ -1,8 +1,11 @@
-import ProductModel from "../../dao/models/product.model.js";
 export default class ProductsService {
+	constructor(repo) {
+		this.repo = repo;
+	}
+
 	async createProduct(product) {
 		try {
-			const newProduct = await ProductModel.create(product);
+			const newProduct = await this.repo.create(product);
 
 			return newProduct;
 		} catch (error) {
@@ -12,7 +15,7 @@ export default class ProductsService {
 
 	async getProducts() {
 		try {
-			const products = await ProductModel.find().lean();
+			const products = await this.repo.get();
 
 			return products;
 		} catch (error) {
@@ -22,9 +25,11 @@ export default class ProductsService {
 
 	async getPaginatedProducts(filter) {
 		try {
-			filter.options.lean = true;
-			const pagesData = await ProductModel.paginate(filter.query, filter.options);
+			const pagesData = await this.repo.getPaginated(filter);
 			pagesData.status = "success";
+
+			pagesData.products = pagesData.docs; // Cambio nombre de propiedad para ser más explícito
+			delete pagesData.docs; // Elimino propiedad que ya no uso
 
 			return pagesData;
 		} catch (error) {
@@ -32,9 +37,9 @@ export default class ProductsService {
 		}
 	}
 
-	async getProductById(id) {
+	async getProductById(pid) {
 		try {
-			const product = await ProductModel.findById(id).lean();
+			const product = await this.repo.get({ _id: pid });
 
 			return product;
 		} catch (error) {
@@ -42,9 +47,9 @@ export default class ProductsService {
 		}
 	}
 
-	async deleteProductById(id) {
+	async deleteProductById(pid) {
 		try {
-			const product = await ProductModel.findByIdAndDelete(id).lean();
+			const product = await this.repo.delete({ _id: pid });
 
 			return product;
 		} catch (error) {
@@ -52,10 +57,9 @@ export default class ProductsService {
 		}
 	}
 
-	async updateProduct(id, productUpdates) {
-		// {title: "nuevo titulo"}
+	async updateProduct(pid, productUpdates) {
 		try {
-			const product = await ProductModel.findByIdAndUpdate(id, productUpdates, { new: true }).lean();
+			const product = await this.repo.get({ _id: pid }, productUpdates);
 
 			return product;
 		} catch (error) {

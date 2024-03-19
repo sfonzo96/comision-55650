@@ -1,7 +1,7 @@
 export default function (req, res, next) {
-	if (!req.session.user) {
-		next();
-	} else {
+	if (req.isAuthenticated()) {
 		res.redirect("/products");
+	} else {
+		next();
 	}
 }

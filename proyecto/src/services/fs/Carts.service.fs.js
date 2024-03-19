@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import fs from "fs";
-import ProductsService from "./Products.service.fs.js";
+import ProductsService from "./products.service.fs.js";
 
 const productsService = new ProductsService();
 

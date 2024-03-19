@@ -28,7 +28,6 @@ export default class ProductsService {
 				throw new Error("Missing data.");
 			}
 
-			console.log(product);
 			const products = await this.getProducts();
 
 			if (products.find((existingProduct) => existingProduct.code === product.code)) {

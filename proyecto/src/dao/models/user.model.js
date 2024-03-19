@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
 		},
 		age: {
 			type: Number,
-			required: true,
 		},
 		firstName: {
 			type: String,
@@ -23,6 +22,10 @@ const userSchema = new mongoose.Schema(
 		lastName: {
 			type: String,
 			required: true,
+		},
+		cart: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Carts",
 		},
 		role: {
 			type: String,

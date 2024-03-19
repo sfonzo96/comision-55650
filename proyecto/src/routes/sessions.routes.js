@@ -1,76 +1,22 @@
-import bcrypt from "bcrypt";
 import { Router } from "express";
-import UserService from "../services/db/User.Service.db.js";
+import passport from "passport";
+import SessionsController from "../controllers/sessions.controller.js";
 
-const sessionsRouter = Router();
-const userService = new UserService();
+const authRouter = Router();
+const sessionsController = new SessionsController();
 
-sessionsRouter.post("/login", async (req, res) => {
-	try {
-		const { email, password } = req.body;
+authRouter.post("/login", passport.authenticate("login", {}), sessionsController.login);
 
-		const user = await userService.getUserByEmail(email);
+authRouter.post("/signup", passport.authenticate("signup", { session: false }), sessionsController.signup);
 
-		if (!user) {
-			return res.status(404).json({ success: false, message: "User not found" });
-		}
+authRouter.get("/google", passport.authenticate("google", { scope: ["profile email"] }));
 
-		const passwordsMatches = await bcrypt.compare(password, user.password);
-
-		if (!passwordsMatches) {
-			return res.status(401).json({ success: false, message: "Invalid password" });
-		}
-
-		delete user.password;
-
-		req.session.user = user;
-
-		res.status(200).json({ success: true, message: "User logged in", redirectUrl: "/products" });
-	} catch (error) {
-		console.log(error.message);
-		res.status(500).json({ success: false, message: "Internal server error" });
-	}
+authRouter.get("/googlecallback", passport.authenticate("google", { failureRedirect: "/login" }), (req, res) => {
+	res.redirect("/products");
 });
 
-sessionsRouter.post("/signup", async (req, res) => {
-	try {
-		const { email, password, age, firstName, lastName } = req.body;
+authRouter.post("/logout", sessionsController.logout);
 
-		const user = await userService.getUserByEmail(email);
+authRouter.get("/current", sessionsController.getCurrentSession);
 
-		if (user) {
-			return res.status(400).json({ success: false, message: "User already exists" });
-		}
-
-		const hashedPassword = await bcrypt.hash(password, 10);
-
-		const newUser = await userService.createUser({ email, password: hashedPassword, age, firstName, lastName });
-
-		if (!newUser) {
-			return res.status(500).json({ success: false, message: "Internal server error" });
-		}
-
-		res.status(201).json({ success: true, message: "User created", redirectUrl: "/login" });
-	} catch (error) {
-		console.log(error.message);
-		res.status(500).json({ success: false, message: "Internal server error" });
-	}
-});
-
-sessionsRouter.post("/logout", async (req, res) => {
-	try {
-		req.session.destroy((error) => {
-			if (error) {
-				console.log(error);
-				res.status(500).json({ success: false, message: "Internal server error" });
-			} else {
-				res.status(200).json({ success: true, message: "User logged out", redirectUrl: "/login" });
-			}
-		});
-	} catch (error) {
-		console.log(error.message);
-		res.status(500).json({ success: false, message: "Internal server error" });
-	}
-});
-
-export default sessionsRouter;
+export default authRouter;

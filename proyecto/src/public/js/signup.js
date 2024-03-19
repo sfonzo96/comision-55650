@@ -1,14 +1,18 @@
 async function postSignup(firstName, lastName, email, password, age) {
 	const data = { firstName, lastName, email, password, age };
 
-	const response = await fetch("/api/sessions/signup", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data),
-	});
+	try {
+		const response = await fetch("/api/auth/signup", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(data),
+		});
 
-	const result = await response.json();
-	return result;
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		return { success: false, message: "Invalid credentials" };
+	}
 }
 
 const signupForm = document.getElementById("signup-form");
@@ -27,6 +31,6 @@ signupForm.addEventListener("submit", async (event) => {
 	if (response.success == true) {
 		window.location.href = response.redirectUrl;
 	} else {
-		alert("Datos Incorrectos");
+		alert(response.message);
 	}
 });

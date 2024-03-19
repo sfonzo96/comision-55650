@@ -1,10 +1,19 @@
-<form id="login-form" class="login-form">
-	<label for="email" class="form-label">Email:</label>
-	<input type="email" id="email" name="email" class="form-input" required />
+<div>
+	<form id="login-form" class="login-form">
+		<label for="email" class="form-label">Email:</label>
+		<input type="email" id="email" name="email" class="form-input" required />
 
-	<label for="password" class="form-label">Password:</label>
-	<input type="password" id="password" name="password" class="form-input" required />
+		<label for="password" class="form-label">Password:</label>
+		<input type="password" id="password" name="password" class="form-input" required />
 
-	<button class="form-button">Login</button>
-</form>
+		<button class="form-button">Login</button>
+	</form>
+	<div class="googleBtnContainer">
+		<a href="/api/auth/google">
+			<button id="googleLoginBtn">
+				Login with google
+			</button>
+		</a>
+	</div>
+</div>
 <script src="/js/login.js"></script>
