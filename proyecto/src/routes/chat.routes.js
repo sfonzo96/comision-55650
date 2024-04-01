@@ -1,9 +1,9 @@
 import express from "express";
 import ChatController from "../controllers/chat.controller.js";
-import services from "../services/factory.js";
+import { chatService } from "../services/index.js";
 
 const ChatRouter = express.Router();
-const chatController = new ChatController(services.chatService);
+const chatController = new ChatController(chatService);
 
 ChatRouter.post("/", chatController.createMessage);
 

@@ -1,9 +1,9 @@
 import { Router } from "express";
 import ViewsController from "../controllers/views.controller.js";
-import services from "../services/factory.js";
+import { chatService, productsService } from "../services/index.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 const viewsRouter = Router();
-const viewsController = new ViewsController(services.chatService, services.productsService);
+const viewsController = new ViewsController(chatService, productsService);
 
 viewsRouter.get("/", viewsController.renderHome);
 

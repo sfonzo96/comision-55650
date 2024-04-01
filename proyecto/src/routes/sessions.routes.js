@@ -5,13 +5,48 @@ import SessionsController from "../controllers/sessions.controller.js";
 const authRouter = Router();
 const sessionsController = new SessionsController();
 
-authRouter.post("/login", passport.authenticate("login", {}), sessionsController.login);
+authRouter.post(
+	"/login",
+	(req, res, next) => {
+		passport.authenticate("login", (err, user, info) => {
+			if (err || !user) {
+				console.log(info);
+				return res.status(401).json({ success: false, message: info.message });
+			}
 
-authRouter.post("/signup", passport.authenticate("signup", { session: false }), sessionsController.signup);
+			next();
+		})(req, res, next);
+	},
+	sessionsController.login
+);
 
-authRouter.get("/google", passport.authenticate("google", { scope: ["profile email"] }));
+authRouter.post(
+	"/signup",
+	(req, res, next) => {
+		passport.authenticate("login", { session: false }, (err, user, info) => {
+			if (err || !user) {
+				console.log(info);
+				return res.status(401).json({ success: false, message: info.message });
+			}
 
-authRouter.get("/googlecallback", passport.authenticate("google", { failureRedirect: "/login" }), (req, res) => {
+			next();
+		})(req, res, next);
+	},
+	sessionsController.signup
+);
+
+authRouter.get("/google", (req, res, next) => {
+	passport.authenticate("google", { scope: ["profile email"] }, (err, user, info) => {
+		if (err || !user) {
+			console.log(info);
+			return res.status(401).json({ success: false, message: info.message });
+		}
+
+		next();
+	})(req, res, next);
+});
+
+authRouter.get("/googlecallback", passport.authenticate("google"), (req, res) => {
 	res.redirect("/products");
 });
 

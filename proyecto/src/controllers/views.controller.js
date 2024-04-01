@@ -45,7 +45,6 @@ export default class ViewsController {
 				`${baseUrl}&page=${pagesData.nextPage}${sort ? "&sort=" + sort : ""}${
 					category ? "&category=" + category : ""
 				}`;
-
 			if (pagesData.products.length < 1) {
 				res.status(404).json({
 					success: false,

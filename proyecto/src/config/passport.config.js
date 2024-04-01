@@ -1,7 +1,7 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import passportGoogle from "passport-google-oauth20";
-import services from "../services/factory.js";
+import { cartsService, usersService } from "../services/index.js";
 import bcrypt from "bcrypt";
 
 const configPassport = () => {
@@ -15,7 +15,7 @@ const configPassport = () => {
 			},
 			async function (req, username, password, done) {
 				try {
-					const user = await services.usersService.getUserByEmail(username);
+					const user = await usersService.getUserByEmail(username);
 
 					if (!user) {
 						req.loginSuccess = false;
@@ -51,7 +51,7 @@ const configPassport = () => {
 			},
 			async function (req, username, password, done) {
 				try {
-					const user = await services.usersService.getUserByEmail(username);
+					const user = await usersService.getUserByEmail(username);
 
 					if (user) {
 						req.signupSuccess = false;
@@ -62,9 +62,9 @@ const configPassport = () => {
 
 					const { age, firstName, lastName } = req.body;
 
-					const cart = await services.cartsService.createCart();
+					const cart = await cartsService.createCart();
 
-					const newUser = await services.usersService.createUser({
+					const newUser = await usersService.getOrCreateUser({
 						email: username,
 						password: hashedPassword,
 						age,
@@ -94,11 +94,11 @@ const configPassport = () => {
 			{
 				clientID: process.env.GOOGLE_CLIENT_ID,
 				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-				callbackURL: "http://localhost:8080/api/auth/googlecallback",
+				callbackURL: "http://localhost:8080/api/sessions/googlecallback",
 			},
 			async function (accessToken, refreshToken, profile, done) {
 				try {
-					const cart = await services.cartsService.createCart();
+					const cart = await cartsService.createCart();
 
 					const newUser = {
 						email: profile.emails[0].value,
@@ -109,7 +109,7 @@ const configPassport = () => {
 						cart: cart._id,
 					};
 
-					const user = await services.usersService.getOrCreateUser(newUser);
+					const user = await usersService.getOrCreateUser(newUser);
 
 					if (!user) {
 						return done(null, false, { message: "Internal server error" });
@@ -125,12 +125,11 @@ const configPassport = () => {
 	);
 
 	passport.serializeUser(function (user, done) {
-		console.log("serial");
 		done(null, user._id);
 	});
 
 	passport.deserializeUser(async function (id, done) {
-		const user = await services.usersService.getUserById(id);
+		const user = await usersService.getUserById(id);
 		delete user.password;
 		done(null, user);
 	});

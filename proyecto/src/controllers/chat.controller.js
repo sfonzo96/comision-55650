@@ -3,20 +3,19 @@ export default class ChatController {
 		this.chatService = service;
 	}
 
-	createMessage = async (req, res) => {
+	createMessage = async (req, res, next) => {
 		try {
 			const { user, message } = req.body;
 			const newMessage = await chatService.createMessage({ user, message });
 			if (!newMessage) {
-				return res.status(400).json({ success: false, error: "Message could not be created" });
+				throw new CustomError("Message could not be created", 400);
 			}
 
 			req.io.emit("newMessage", newMessage);
 
 			return res.status(201).json({ success: true });
 		} catch (error) {
-			console.log(error.message);
-			return res.status(500).json({ success: false, error: error.message });
+			next(error);
 		}
 	};
 }

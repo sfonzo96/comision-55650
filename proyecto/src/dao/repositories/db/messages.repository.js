@@ -3,7 +3,7 @@ export default class ChatRepository {
 		this.messageModel = model;
 	}
 
-	async create(message) {
+	async createMessage(message) {
 		try {
 			const newMessage = await this.messageModel.create(message);
 			return newMessage;
@@ -12,9 +12,9 @@ export default class ChatRepository {
 		}
 	}
 
-	async get(searchParams) {
+	async getAll() {
 		try {
-			const messages = await this.messageModel.find(searchParams).lean();
+			const messages = await this.messageModel.find().lean();
 			return messages;
 		} catch (error) {
 			throw error;

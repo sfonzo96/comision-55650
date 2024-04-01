@@ -2,7 +2,7 @@ async function postSignup(firstName, lastName, email, password, age) {
 	const data = { firstName, lastName, email, password, age };
 
 	try {
-		const response = await fetch("/api/auth/signup", {
+		const response = await fetch("/api/sessions/signup", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(data),

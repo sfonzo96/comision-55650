@@ -9,6 +9,7 @@ import session from "express-session";
 import passport from "passport";
 import configPassport from "./config/passport.config.js";
 import serverConfig from "./config/env.config.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", IndexRouter);
+app.use(errorHandler); // Agrego middleware a la aplicación LUEGO de agregar las rutas (las rutas lo pasan a este usando el método next() )
 
 const server = app.listen(serverConfig.PORT, (error) => {
 	if (error) {

@@ -12,5 +12,8 @@ IndexRouter.use("/api/carts", CartsRouter);
 IndexRouter.use("/api/chat", ChatRouter);
 IndexRouter.use("/api/sessions", SessionsRouter);
 IndexRouter.use("/", ViewsRouter);
+IndexRouter.use("/artillery", (req, res) => {
+	res.status(200).json({ message: "Artillery test" });
+});
 
 export default IndexRouter;
